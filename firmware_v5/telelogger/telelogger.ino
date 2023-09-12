@@ -171,11 +171,17 @@ void printTimeoutStats()
 
 void beep(int duration)
 {
+    // No need to beep, we're stealthy. We keep the delay
+    // to not confuse other parts of the application that
+    // may be relying on the beep taking time.
+
+    /*
     // turn on buzzer at 2000Hz frequency 
     sys.buzzer(2000);
     delay(duration);
     // turn off buzzer
     sys.buzzer(0);
+    */
 }
 
 #if LOG_EXT_SENSORS

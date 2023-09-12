@@ -89,9 +89,9 @@
 
 #ifndef SERVER_HOST
 // cellular network settings
-#define CELL_APN ""
+#define CELL_APN "hologram"
 // Freematics Hub server settings
-#define SERVER_HOST "hub.freematics.com"
+#define SERVER_HOST "traccar.dries.info"
 #define SERVER_PROTOCOL PROTOCOL_UDP
 #endif
 
@@ -107,7 +107,7 @@
 #if !SERVER_PORT
 #undef SERVER_PORT
 #if SERVER_PROTOCOL == PROTOCOL_UDP
-#define SERVER_PORT 8081
+#define SERVER_PORT 5170
 #elif SERVER_PROTOCOL == PROTOCOL_HTTP
 #define SERVER_PORT 80
 #elif SERVER_PROTOCOL == PROTOCOL_HTTPS
@@ -132,8 +132,8 @@
 // expected maximum server sync signal interval
 #define SERVER_SYNC_INTERVAL 120 /* seconds, 0 to disable */
 // data interval settings
-#define STATIONARY_TIME_TABLE {10, 60, 180} /* seconds */
-#define DATA_INTERVAL_TABLE {1000, 2000, 5000} /* ms */
+#define STATIONARY_TIME_TABLE {30, 60, 180} /* seconds */
+#define DATA_INTERVAL_TABLE {2000, 4000, 8000} /* ms */
 #define PING_BACK_INTERVAL 900 /* seconds */
 #define SIGNAL_CHECK_INTERVAL 10 /* seconds */
 
