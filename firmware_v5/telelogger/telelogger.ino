@@ -175,13 +175,17 @@ void beep(int duration)
     // to not confuse other parts of the application that
     // may be relying on the beep taking time.
 
-    /*
+    #if ENABLE_BUZZER
     // turn on buzzer at 2000Hz frequency 
     sys.buzzer(2000);
+    #endif
+
     delay(duration);
+
+    #if ENABLE_BUZZER
     // turn off buzzer
     sys.buzzer(0);
-    */
+    #endif
 }
 
 #if LOG_EXT_SENSORS
@@ -635,7 +639,7 @@ bool waitMotion(long timeout)
         float m = (acc[i] - accBias[i]);
         motion += m * m;
       }
-#if ENABLE_HTTTPD
+#if ENABLE_HTTPD
       serverProcess(100);
 #endif
       processBLE(100);
@@ -955,6 +959,9 @@ void telemetry(void* inst)
         if (!initCell() || !teleClient.connect()) {
           teleClient.cell.end();
           state.clear(STATE_NET_READY | STATE_CELL_CONNECTED);
+          Serial.println("[CELL] Deactivated");
+          // avoid turning on/off cellular module too frequently to avoid operator banning
+          delay(60000 * 3);
           break;
         }
         Serial.println("[CELL] In service");
@@ -1082,7 +1089,7 @@ void standby()
 
 #if !GNSS_ALWAYS_ON && GNSS == GNSS_STANDALONE
   if (state.check(STATE_GPS_READY)) {
-    Serial.println("[GPS] OFF");
+    Serial.println("[GNSS] OFF");
     sys.gpsEnd(true);
     state.clear(STATE_GPS_READY | STATE_GPS_ONLINE);
     gd = 0;

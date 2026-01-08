@@ -1,6 +1,20 @@
 #ifndef CONFIG_H_INCLUDED
 #define CONFIG_H_INCLUDED
 
+// Config for dries.info
+#define CONFIG_ENABLE_OBD       1
+#define CONFIG_ENABLE_WIFI      0
+#define CONFIG_ENABLE_BLE       0
+#define CONFIG_ENABLE_HTTPD     0
+#define CONFIG_CELL_APN         "hologram"
+#define CONFIG_SERVER_HOST      "traccar.dries.info"
+#define CONFIG_SERVER_PORT      5170
+#define CONFIG_SERVER_PROTOCOL  PROTOCOL_UDP
+#define GNSS                    GNSS_STANDALONE
+#define ENABLE_MEMS             1
+#define ENABLE_BUZZER           0
+// End config for dries.info
+
 #ifdef CONFIG_ENABLE_OBD
 #define ENABLE_OBD CONFIG_ENABLE_OBD
 #endif
@@ -61,11 +75,8 @@
 #define GNSS_CELLULAR 2
 
 #define PROTOCOL_UDP 1
-#define PROTOCOL_HTTP 2
-#define PROTOCOL_HTTPS 3
-
-#define PROTOCOL_METHOD_GET 0
-#define PROTOCOL_METHOD_POST 1
+#define PROTOCOL_HTTPS_GET 2
+#define PROTOCOL_HTTPS_POST 3
 
 /**************************************
 * OBD-II configurations
@@ -89,9 +100,9 @@
 
 #ifndef SERVER_HOST
 // cellular network settings
-#define CELL_APN "hologram"
+#define CELL_APN ""
 // Freematics Hub server settings
-#define SERVER_HOST "traccar.dries.info"
+#define SERVER_HOST "hub.freematics.com"
 #define SERVER_PROTOCOL PROTOCOL_UDP
 #endif
 
@@ -101,16 +112,13 @@
 #define APN_PASSWORD NULL
 
 // HTTPS settings
-#define SERVER_METHOD PROTOCOL_METHOD_POST
 #define SERVER_PATH "/hub/api"
 
 #if !SERVER_PORT
 #undef SERVER_PORT
 #if SERVER_PROTOCOL == PROTOCOL_UDP
-#define SERVER_PORT 5170
-#elif SERVER_PROTOCOL == PROTOCOL_HTTP
-#define SERVER_PORT 80
-#elif SERVER_PROTOCOL == PROTOCOL_HTTPS
+#define SERVER_PORT 8081
+#else
 #define SERVER_PORT 443
 #endif
 #endif
@@ -191,6 +199,5 @@
 #ifndef ENABLE_BLE
 #define ENABLE_BLE 1
 #endif
-
 
 #endif // CONFIG_H_INCLUDED
